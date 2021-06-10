@@ -28,12 +28,12 @@ jobs:
       with:
         version: latest
     - name: Pack
-      run: octo pack --id="WelcomePMM3" --format="zip" --version="1.0.${{github.run_number}}" --basePath="/home/runner/work/pmm-workshop-3/kathryn-test/build/" --verbose
+      run: octo pack --id="WelcomePMM3" --format="zip" --version="1.0.${{github.run_number}}" --basePath="/home/runner/work/pmm-workshop-3/pmm-workshop-3/build/" --verbose
     - name: Upload WelcomePMM3 Build Artifact
       uses: actions/upload-artifact@v2
       with:
         name: WelcomePMM3
-        path: /home/runner/work/pmm-workshop-3/kathryn-test/build/
+        path: /home/runner/work/pmm-workshop-3/pmm-workshop-3/build/
     - name: Push a package to Octopus Deploy 🐙
       uses: OctopusDeploy/push-package-action@v1.0.1
       with:
