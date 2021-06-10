@@ -23,3 +23,27 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Install Octopus CLI 🐙
+      uses: OctopusDeploy/install-octopus-cli-action@v1.1.6
+      with:
+        version: latest
+    - name: Pack
+      run: octo pack --id="WelcomePMM3" --format="zip" --version="1.0.${{github.run_number}}" --basePath="/home/runner/work/pmm-workshop-3/kathryn-test/build/" --verbose
+    - name: Upload WelcomePMM3 Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: WelcomePMM3
+        path: /home/runner/work/pmm-workshop-3/kathryn-test/build/
+    - name: Push a package to Octopus Deploy 🐙
+      uses: OctopusDeploy/push-package-action@v1.0.1
+      with:
+        api_key: ${{ secrets.OCTOPUS_APIKEY }}
+        packages: "WelcomePMM3.1.0.${{github.run_number}}.zip"
+        server: ${{ secrets.OCTOPUS_SERVER }}
+    - name: Create a release in Octopus Deploy 🐙
+      uses: OctopusDeploy/create-release-action@v1.0.2
+      with:
+        api_key: ${{ secrets.OCTOPUS_APIKEY }}
+        server: ${{ secrets.OCTOPUS_SERVER }}
+        project: "Welcome to PMM3" #Projects-61
+        deploy_to: "Dev"
