@@ -45,5 +45,5 @@ jobs:
       with:
         api_key: ${{ secrets.OCTOPUS_APIKEY }}
         server: ${{ secrets.OCTOPUS_SERVER }}
-        project: "Projects-61" #Welcome to PMM3
+        project: "Projects-61"
         deploy_to: "Dev"
